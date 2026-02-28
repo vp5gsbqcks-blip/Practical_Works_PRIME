@@ -1,0 +1,432 @@
+using System;
+using System.Net;
+
+namespace ПР_6
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    try
+                    {
+                        int ex = 0;
+                        Console.WriteLine("Введите задание, которое вы хотите просмотреть: " +
+                     "\n 1 Задание: Длина окружности из радиуса" +
+                     "\n 2 Задание: Периметр фигуры" +
+                     "\n 3 Задание: Перевод числа из десятички в двоичку" +
+                     "\n 4 Задание: Количество цифр 5" +
+                     "\n 5 Задание: Сколько раз входит число B в число A");
+                        ex = Convert.ToInt32(Console.ReadLine());
+                        switch (ex)
+                        {
+                            case 1:
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Вы выбрали задание #1\n");
+                                Console.ResetColor();
+                                string r = "";
+                                float c = 0;
+                                Console.Write("Введите радиус окружности r\n--> ");
+                                try
+                                {
+                                    r = Console.ReadLine();
+                                    c = CircumferenceLength(r);
+                                    if (c == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.Write($"\nДлина окружности равна: ");
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(c);
+                                        Console.ResetColor();
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                                    Console.WriteLine("Непредвиденная ошибка.");
+                                    Console.ResetColor();
+                                    break;
+                                }
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Вы выбрали задание #2\n");
+                                Console.ResetColor();
+                                string user_answ = "", data = "";
+                                float[] triangle = new float[3];
+                                float[] rectangle = new float[4];
+                                float[] pentagon = new float[5];
+                                string[] data_split = new string[5];
+                                int ex_ex2 = 0, b = 0;
+                                float result = 0;
+                                Console.WriteLine("Введите номер действия, которое хотите выполнить:\n" +
+                                "1. Нахождение периметра треугольника.\n" +
+                                "2. Нахождение периметра прямоугольника.\n" +
+                                "3. Нахождение периметра пятиугольника.");
+                                try
+                                {
+                                    user_answ = Console.ReadLine();
+                                    if (!int.TryParse(user_answ, out b))
+                                    {
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Ошибка #200. Данные введены неверно!");
+                                        Console.ResetColor();
+                                        break;
+                                    }
+                                    if (Convert.ToInt32(user_answ) > 3 | Convert.ToInt32(user_answ) < 1)
+                                    {
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Ошибка #201. Введён неверный номер задания!");
+                                        Console.ResetColor();
+                                        break;
+                                    }
+                                    ex_ex2 = Convert.ToInt32(user_answ); //Треугольник
+                                    if (ex_ex2 == 1)
+                                    {
+                                        Console.Clear();
+                                        Console.Write("Вы выбрали действие 1.\n\nВведите длины сторон треугольника через пробел:\n--> ");
+                                        data = Console.ReadLine();
+                                        data_split = data.Split(' ');
+                                        if (data_split.Length < 3)
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Ошибка #202! Введено мало значений!");
+                                            Console.ResetColor();
+                                            break;
+                                        }
+                                        for (int i = 0; i < 3; i++)
+                                        {
+                                            triangle[i] = Convert.ToSingle(data_split[i]);
+                                        }
+                                        result = Perimeter(triangle);
+                                        if (result != 0)
+                                        {
+                                            Console.Write($"Периметр треугольника равен: ");
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            Console.WriteLine(result);
+                                            Console.ResetColor();
+                                        }
+                                        if (result == 0)
+                                            break;
+                                    }
+                                    if (ex_ex2 == 2) //Прямоугольник
+                                    {
+                                        Console.Clear();
+                                        Console.Write("Вы выбрали действие 2.\n\nВведите длины сторон прямоугольника через пробел:\n--> ");
+                                        data = Console.ReadLine();
+                                        data_split = data.Split(' ');
+                                        if (data_split.Length < 2)
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Ошибка #203! Введено мало значений!");
+                                            Console.ResetColor();
+                                            break;
+                                        }
+                                        if (data_split.Length > 2)
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Ошибка #203.1! Введено МнОгО значений! Достаточно ДВУХ СТОРОН ПРЕМОУГОЛЬНЕКА");
+                                            Console.ResetColor();
+                                            break;
+                                        }
+                                        for (int i = 0; i < 2; i++)
+                                        {
+                                            rectangle[i] = Convert.ToSingle(data_split[i]);
+                                        }
+                                        result = Perimeter(rectangle);
+                                        if (result != 0)
+                                        {
+                                            Console.Write($"Периметр прямоугольника равен: ");
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            Console.WriteLine(result);
+                                            Console.ResetColor();
+                                        }
+                                        if (result == 0)
+                                            break;
+                                    }
+                                    if (ex_ex2 == 3) //Пятиугольник
+                                    {
+                                        Console.Clear();
+                                        Console.Write("Вы выбрали действие 3.\n\nВведите длины сторон пятиугольника через пробел:\n--> ");
+                                        data = Console.ReadLine();
+                                        data_split = data.Split(' ');
+                                        if (data_split.Length < 5)
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Ошибка #203! Введено мало значений!");
+                                            Console.ResetColor();
+                                            break;
+                                        }
+                                        for (int i = 0; i < 5; i++)
+                                        {
+                                            pentagon[i] = Convert.ToSingle(data_split[i]);
+                                        }
+                                        result = Perimeter(pentagon);
+                                        if (result != 0)
+                                        {
+                                            Console.Write($"Периметр пятиугольника равен: ");
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            Console.Write(result);
+                                            Console.ResetColor();
+                                        }
+                                        if (result == 0)
+                                            break;
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.Clear();
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Ошибка #220. Возможен неверный ввод данных.");
+                                    Console.ResetColor();
+                                }
+                                break;
+                            case 3:
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Вы выбрали задание #3\n");
+                                Console.ResetColor();
+                                int number = 0;
+                                Console.Write("Введите число в десятичном формате\n--> ");
+                                try
+                                {
+                                    number = Convert.ToInt32(Console.ReadLine());
+                                    Console.Write("\nЧисло в двоичном формате: ");
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine(BinaryNumber(number));
+                                    Console.ResetColor();
+                                }
+                                catch
+                                {
+                                    Console.Clear();
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Ошибка #300. Возможен неверный ввод данных.");
+                                    Console.ResetColor();
+                                }
+                                break;
+                            case 4:
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Вы выбрали задание #4\n");
+                                Console.ResetColor();
+                                string nums = "";
+                                int[] arrival = new int[15];
+                                string[] numbers = new string[15];
+                                bool boo = true;
+                                Console.Write("Введите 15 цифр (от 0 до 9) через пробел:\n--> ");
+                                try
+                                {
+                                    nums = Console.ReadLine();
+                                    numbers = nums.Split(' ');
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        arrival[i] = Convert.ToInt32(numbers[i]); //Заполняем массив
+                                    }
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        if (arrival[i] > 9)
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Ошибка! Нужно число от 1 до 9!");
+                                            Console.ResetColor();
+                                            boo = false;
+                                            break;
+                                        }
+                                    }
+                                    if(boo != false)
+                                        Console.WriteLine(QuantityNumberFive(arrival));
+                                }
+                                catch
+                                {
+                                    Console.Clear();
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Ошибка #400. Возможен неверный ввод данных.");
+                                    Console.ResetColor();
+                                }
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Вы выбрали задание #5\n");
+                                Console.ResetColor();
+                                int[] arrival_ex5 = new int[2];
+                                string[] symbols = new string[2];
+                                string str = "";
+                                try
+                                {
+                                    Console.WriteLine("Введите через пробел число A и число B");
+                                    str = Console.ReadLine();
+                                    symbols = str.Split(' ');
+                                    for (int i = 0; i < 2; i++)
+                                        arrival_ex5[i] = Convert.ToInt32(symbols[i]);
+                                    Console.Write($"Вывод: {OccurrenceOfANumber(arrival_ex5, out int iter)}");                                    
+                                }
+                                catch
+                                {
+                                    Console.Clear();
+                                    Console.ForegroundColor = ConsoleColor.Red; 
+                                    Console.WriteLine("Неизвестная ошибка #501. Возможен неверный ввод данных.");
+                                    Console.ResetColor();
+                                    break;
+                                }
+                                break;
+                        }
+                        if (ex > 5 | ex < 1)
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Неверный номер задания!");
+                            Console.ResetColor();
+                        }
+                    }
+                    catch
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Ошибка! Нужно ввести номер задания!");
+                        Console.ResetColor();
+                    }
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("\n Хотите продолжить? Введите Y " +
+                        "\n Если хотите прекратить, введите N ");
+                    Console.ResetColor();
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }
+            }
+        }
+        static float CircumferenceLength(in string r) //Длина окружности
+        {
+            float c = 0;
+            if (!float.TryParse(r, out c))
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Ошибка #100. Неверный ввод данных!");
+                Console.ResetColor();
+                return 0;
+            }
+            if (Convert.ToSingle(r) == 0)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\nЗначение равно нулю, так как ведённые данные: 0");
+                Console.ResetColor();
+                return 0;
+            }
+            if (Convert.ToSingle(r) < 0)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nОшибка #101. Значение меньше нуля!");
+                Console.ResetColor();
+                return 0;
+            }
+            if (Convert.ToSingle(r) > 1e15)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nОшибка #102. Слишком большое введённое значение.");
+                Console.ResetColor();
+                return 0;
+            }
+            c = 2 * Convert.ToSingle(Math.PI) * Convert.ToSingle(r);
+            if (c == '?')
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nОшибка #103. Ошибка формата");
+                Console.ResetColor();
+                return 0;
+            }
+            if (Convert.ToSingle(c) > 1e15)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nОшибка #104. Ответ имеет слишком большое значение.");
+                Console.ResetColor();
+                return 0;
+            }
+            return c;
+        }
+        static float Perimeter(params float[] figure) //Нахождение периметра фигуры
+        {
+            float P = 0;
+            for (int i = 0; i < figure.Length; i++)
+            {
+                Console.Clear();
+                if (figure[i] < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Ошибка #211. Значение стороны фигуры не должно быть меньше нуля!");
+                    Console.ResetColor();
+                    return 0;
+                }
+            }
+            P = 2 * (figure[0] + figure[1]);
+            return P;
+        }       
+        static string BinaryNumber(in int number) //Перевод в двоичку
+        {
+            if (number == 0) return "0";
+            if (number == 1) return "1";
+            return BinaryNumber(number / 2) + (number % 2).ToString();
+        } 
+        static bool QuantityNumberFive(params int[] numbers) //Количество цифер 5
+        {
+            int quan = 0;
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] == 5)
+                    quan++;
+            }
+            if (quan > 0)
+            {
+                Console.WriteLine(quan);
+                return true;
+            }
+            return false;
+        }        
+        static bool OccurrenceOfANumber(int[] symbols, out int iter) //Количество вхождений
+        {
+            iter = 0;
+            int quantity = symbols[0];
+            if (symbols[1] == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Ошибка #500. Попытка деления на ноль!");
+                Console.ResetColor();
+                return false;                
+            }
+            do
+            {
+                quantity -= symbols[1];
+                if (quantity >= 0)
+                    iter++;
+            }
+            while (quantity >= 0);
+            Console.Write($"Количество вхождений: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(iter);
+            Console.ResetColor();
+            return true;
+        }
+    }
+}
