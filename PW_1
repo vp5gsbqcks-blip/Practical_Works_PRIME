@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ПР_1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Введите номер задания, которое вы хотите просмотреть: \n 1 Задание. Сравнение чисел \n 2 Задание. Поиск среднего арифметического чисел \n 3 Задание. Расчёт стоимости поездки \n 4 Задание. Сумма вклада с процентами \n 5 Задание. Операции над числами (Слож.,Выч.,Умнож.)");
+                    int ex = Convert.ToInt32(Console.ReadLine());
+                    switch (ex)
+                    {
+                        case 1:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #1: Сравнение чисел");
+                            int fir_n, sec_n;
+                            Console.WriteLine("Введите первое число для сравнения");
+                            fir_n = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите второе число для сравнения");
+                            sec_n = Convert.ToInt32(Console.ReadLine());
+                            if (fir_n == sec_n)
+                            {
+                                Console.WriteLine("Числа равны");
+                            }
+                            else if (fir_n > sec_n)
+                            {
+                                Console.WriteLine("Первое число больше второго");
+                            }
+                            else if (sec_n > fir_n)
+                            {
+                                Console.WriteLine("Второе число больше первого");
+
+                            }
+                            break;
+                        case 2:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #2: Поиск среднего арифметического");
+                            float fir_d, sec_d;
+                            float sred = 0;
+                            Console.WriteLine("Введите первое число");
+                            fir_d = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите второе число");
+                            sec_d = Convert.ToInt32(Console.ReadLine());
+                            sred = (fir_d + sec_d) / 2;
+                            Console.WriteLine("Среднее арифметическое чисел: " + sred);
+                            break;
+                        case 3:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #3: Расчёт стоимости поездки");
+                            float S, benz, stoim, tsena;
+                            Console.WriteLine("Введите расстояние в киломентрах");
+                            S = Convert.ToSingle(Console.ReadLine());
+                            Console.WriteLine("Введите расход бензина");
+                            benz = Convert.ToSingle(Console.ReadLine());
+                            Console.WriteLine("Введите цену бензина");
+                            tsena = Convert.ToSingle(Console.ReadLine());
+                            stoim = ((benz / 100) * tsena) * S;
+                            Console.WriteLine("Стоимость данной поездки: " + stoim);
+                            break;
+                        case 4:
+                            Console.Clear();                            
+                            Console.WriteLine("Вы выбрали задание #4: Сумма вклада с процентами");
+                            double sum_v;
+                            double sum_per = 0;
+                            Console.WriteLine("Введите сумму вклада");
+                            sum_v = Convert.ToInt32(Console.ReadLine());
+                            if (sum_v <= 100)
+                            {
+                                sum_per = sum_v + ((sum_v / 100) * 5);
+                                Console.WriteLine("Сумма вклада с начислением 5%: " + sum_per);
+                            }
+                            else if (sum_v > 100 & sum_v <= 200)
+                            {
+                                sum_per = sum_v + ((sum_v / 100) * 7);
+                                Console.WriteLine("Сумма вклада с начислением 7%: " + sum_per);
+                            }
+                            else if (sum_v > 200)
+                                sum_per = sum_v + ((sum_v / 100) * 10);
+                            Console.WriteLine("Сумма вклада с начислением 10%: " + sum_per);
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #5: Операции над числами (Слож.,Выч.,Умнож.)");
+                            float num, ans = 0;
+                            float fiir, seec;
+                            Console.WriteLine("Введите номер операции: \n 1. Сложение \n 2. Вычитание \n 3. Умножение");
+                            num = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите первое вещественное число");
+                            fiir = Convert.ToSingle(Console.ReadLine());
+                            Console.WriteLine("Введите второе вещественное число");
+                            seec = Convert.ToSingle(Console.ReadLine());
+                            if (num == 1)
+                            {
+                                ans = fiir + seec;
+                                Console.WriteLine("Выбрана операция 1. Сложение \n Ответ: " + ans);
+                            }
+                            else if (num == 2)
+                            {
+                                ans = fiir - seec;
+                                Console.WriteLine("Выбрана операция 2. Вычитание \n Ответ: " + ans);
+                            }
+                            else if (num == 3)
+                            {
+                                ans = fiir * seec;
+                                Console.WriteLine("Выбрана операция 3. Умножение \n Ответ: " + ans);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Операция не определена");
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Задание не определено \n");
+                            break;
+                    }
+                    Console.WriteLine("Хотите продолжить? Введите Y \n Если хотите прекратить, введите N ");
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
