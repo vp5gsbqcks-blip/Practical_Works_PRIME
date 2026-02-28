@@ -1,0 +1,329 @@
+using System;
+
+namespace ПР_5_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    try
+                    {
+                        int ex = 0;
+                        Console.WriteLine("Введите задание, которое вы хотите просмотреть: " +
+                     "\n 1 Задание: В чём сила, брат? В силе тока!" +
+                     "\n 2 Задание: 12 месяцев" +
+                     "\n 3 Задание: Расчёт центростремительного ускорения" +
+                     "\n 4 Задание: Треугольное чтиво: Синус VS Косинус" +
+                     "\n 5 Задание: Вычислительная мощь");
+                        ex = Convert.ToInt32(Console.ReadLine());
+                        switch (ex)
+                        {
+                            case 1:
+                                Console.Clear();
+                                Console.WriteLine("Вы выбрали задание #1\n");
+                                string U = "", R = "";
+                                float answer = 0;
+                                Console.Write("Введите значение напряжения U: \n--> ");
+                                U = Console.ReadLine();
+                                if (!float.TryParse(U, out answer))
+                                {
+                                    Console.WriteLine("Ошибка #100. Данные введены неверно.");
+                                    break;
+                                }
+                                if (Convert.ToDouble(U) <= 0)
+                                {
+                                    Console.WriteLine("Ошибка #101. Значение напряжения не может быть отрицательным.");
+                                    break;
+                                }
+                                Console.Write("Введите значение сопротивления R: \n--> ");
+                                R = Console.ReadLine();
+                                if (!float.TryParse(R, out answer))
+                                {
+                                    Console.WriteLine("Ошибка #102. Данные введены неверно.");
+                                    break;
+                                }
+                                answer = CalculateCurrent(U, R);
+                                if (answer != 0)
+                                    Console.WriteLine($"Значение силы тока I: {answer}");
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.WriteLine("Вы выбрали задание #2\n");
+                                int mon = 0;
+                                string[] months = new string[12] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+                                Console.Write("Введите порядковый номер месяца, который хотите вывести: \n--> ");
+                                string count = Console.ReadLine();
+                                mon = ProcessingError(count);
+                                if (mon != 0)
+                                    Console.WriteLine(months[mon - 1]);
+                                break;
+                            case 3:
+                                Console.Clear();
+                                double answer_ac, rad = 0;
+                                string t = "";
+                                Console.WriteLine("Вы выбрали задание #3\n");
+                                Console.Write("Введите значение радиуса окружности R: \n--> ");
+                                try
+                                {
+                                    rad = Convert.ToSingle(Console.ReadLine());
+                                    Console.Write("Введите значение периода обращения T или введите Z, чтобы завершить: \n--> ");
+                                    t = Convert.ToString(Console.ReadLine());
+                                    if (rad == 0)
+                                        Console.WriteLine("Значение равно нулю.");
+                                    if (!double.TryParse(t, out double b))
+                                    {
+                                        Console.WriteLine("Ошибка #300. Неверный ввод данных.");
+                                        break;
+                                    }
+                                    if (t == "z" || t == "Z")
+                                        break;
+                                    answer_ac = CalculationOfCentripetalAcceleration(rad, t);
+                                    if (answer_ac != 0)
+                                        Console.WriteLine($"Центростремительное ускорение равно: {answer_ac}");
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Ошибка #301 Неверный ввод данных.");
+                                }
+                                break;
+                            case 4:
+                                Console.Clear();
+                                Console.WriteLine("Вы выбрали задание #4\n");
+                                float[] sides = new float[3];
+                                string triangle = "";
+                                float a = 0;
+                                Console.Write("Введите три длины для сторон треугольника через пробел: Катет A, Катет B и Гипотенузу C \n--> ");
+                                try
+                                {
+                                    triangle = Console.ReadLine();
+                                    string[] triangle_sides = triangle.Split(' ');
+                                    if (CheckingTheTriangle(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2])) == 1)
+                                        break;
+                                    a = СheckingTheStraightnessOfATriangle(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2]));
+                                    if (a == 0)
+                                    {
+                                        Console.WriteLine("Треугольник прямоугольный.");
+                                        Console.WriteLine($"Синус равен: {CalculatingTheSine(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2]))}");
+                                        Console.WriteLine($"Косинус равен: {CalculatingTheCosine(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2]))}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Треугольник непрямоугольный.\nСинус равен: {CalculatingTheSinePrime(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2]))}");
+                                        Console.WriteLine($"Косинус равен: {CalculatingTheCosinePrime(Convert.ToSingle(triangle_sides[0]), Convert.ToSingle(triangle_sides[1]), Convert.ToSingle(triangle_sides[2]))}");
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Ошибка #404. Возможен неверный ввод данных.");
+                                    break;
+                                }
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Console.WriteLine("Вы выбрали задание #5\n");
+                                Console.WriteLine("Введите значение");
+                                float[] variables = new float[2];
+                                string x_y = "";
+                                Console.Write("Введите значения x и y через пробел:\n--> ");
+                                try
+                                {
+                                    x_y = Console.ReadLine();
+                                    string[] x_and_y = x_y.Split(' ');
+                                    if (x_and_y.Length != 2)
+                                    {
+                                        Console.WriteLine("Ошибка: необходимо ввести ровно два значения.");
+                                        return;
+                                    }
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        variables[i] = Convert.ToSingle(x_and_y[i]);
+                                    }
+                                    float fir = FirstCalculation(variables[0], variables[1]);
+                                    if (float.IsNaN(fir) || float.IsInfinity(fir))
+                                    {
+                                        Console.WriteLine("Ошибочка! Результат не вывести!");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Первый метод:\n  Значение y: {fir}");
+                                    }
+                                    Console.WriteLine($"Второй метод:\n  Значение z: {SecondCalculationZ(variables[0], variables[1])}");
+                                }
+                                catch (FormatException)
+                                {
+                                    Console.WriteLine("Ошибка: введены неверные данные.");
+                                }                                
+                                break;
+                        }
+                        if (ex > 5)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Неверный номер задания!");
+                        }
+                    }
+                    catch
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Ошибка! Нужно ввести номер задания!");
+                    }
+                    Console.WriteLine("\n Хотите продолжить? Введите Y " +
+                        "\n Если хотите прекратить, введите N ");
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }
+            }
+        }
+        static float CalculateCurrent(string U, string R) //Расчёт силы тока
+        {
+            float current;
+            if (!float.TryParse(U, out float Uv))
+            {
+                Console.WriteLine("Ошибка #103. Значение напряжения должно быть числом.");
+                return 0;
+            }
+            if (Uv > 1e15)
+            {
+                Console.WriteLine("Ошибка #104. Слишком большое число.");
+                return 0;
+            }
+            if (!float.TryParse(R, out float Re))
+            {
+                Console.WriteLine("Ошибка #105. Значение сопротивления должно являться числом.");
+                return 0;
+            }
+            if (Re > 1e15)
+            {
+                Console.WriteLine("Ошибка #106. Слишком большое число.");
+                return 0;
+            }
+            if (Re <= 0)
+            {
+                Console.WriteLine("Ошибка #107. Значение сопротивления должно быть больше нуля.");
+                return 0;
+            }
+            current = Uv / Re;
+            return current;
+        }
+        static int ProcessingError(string count) //Вывод месяца
+        {
+            int co;
+            if (!int.TryParse(count, out int a))
+            {
+                Console.WriteLine("Ошибка #200. Нужно целочисленное значение: <= 12.");
+                return 0;
+            }
+            co = Convert.ToInt32(count);
+            if (co > 12)
+            {
+                Console.WriteLine("Ошибка #201. Число больше 12! Месяцев всего 12, балбес! Нужно число <= 12");
+                return 0;
+            }
+            if (co < 1)
+            {
+                Console.WriteLine("Ошибка #202. Число меньше 1! Нужно число >= 1");
+                return 0;
+            }
+            return co;
+        }
+        static float CalculationOfCentripetalAcceleration(double rad, string t) //Расчёт центростремительного ускорения
+        {
+            double ac;
+            float a;
+            try
+            {
+                if (Convert.ToDouble(t) == 0)
+                {
+                    Console.WriteLine("Ошибка #302. Попытка деления на ноль.");
+                    return 0;
+                }
+                ac = 4 * Math.Pow(3.14f, 2) * rad / Math.Pow(Convert.ToDouble(t), 2);
+                a = Convert.ToSingle(ac);
+            }
+            catch
+            {
+                Console.WriteLine("Ошибка #304. Неизвестная ошибка.");
+                return 0;
+            }
+            return a;
+        }
+        static float CheckingTheTriangle(float a, float b, float c) //Проверка возможности образования треугольника
+        {
+            if (a + b > c & a + c > b & b + c > a)
+            {
+                Console.WriteLine("Стороны могут образовать треугольник.");
+                return 0;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка #400. Стороны не могут образовать треугольник.");
+                return 1;
+            }
+        }
+        static float СheckingTheStraightnessOfATriangle(float a, float b, float c) //Проверка треугольника на прямость
+        {
+            double a_1 = 0, b_1 = 0, c_1 = 0, a_2 = 0, b_2 = 0, c_2 = 0;
+            a_1 = Math.Pow(a, 2);
+            b_1 = Math.Pow(b, 2);
+            c_1 = Math.Pow(c, 2);
+            a_2 = b_1 + c_1;
+            b_2 = a_1 + c_1;
+            c_2 = a_1 + b_1;
+            if (c_2 == c_1)
+            {
+                if (b_2 == b_1)
+                {
+                    if (a_2 == a_1)
+                        Console.WriteLine("Треугольник прямоугольный.");
+                }
+            }
+            else
+                return 1;
+            return 0;
+        }
+        static float CalculatingTheSine(float a, float b, float c) //Вычисление синуса
+        {
+            float sin = b / c;
+            return sin;
+        }
+        static float CalculatingTheCosine(float a, float b, float c) //Вычисление косинуса
+        {
+            float cos = a / c;
+            return cos;
+        }
+        static float FirstCalculation(float x, float y) //Вычисление y
+        {
+            float y_cal = (x + 5) / (x - 7);
+            if (y_cal == '?')
+                return 0;
+            return y_cal;
+        }
+        static float SecondCalculationZ(float x, float y) //Вычисление z
+        {
+            float z = 0;
+            double ze = (x - y) / Math.Cos(x);            
+            z = Convert.ToSingle(ze);
+            return z;
+        }
+        static float CalculatingTheSinePrime(float a, float b, float c)
+        {
+            float sin_p = (b / c);
+            return sin_p;
+        }        
+        static float CalculatingTheCosinePrime(float a, float b, float c)
+        {
+            float cos_s;
+            double cos_p = (Math.Pow(b, 2) + Math.Pow(c, 2) - Math.Pow(a, 2)) / (2 * b * c);
+            cos_s = Convert.ToSingle(cos_p);
+            return cos_s;
+        }
+    }
+}
