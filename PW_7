@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ПР_7;
+
+namespace New7
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            char an = 'Y';
+            do
+            {
+                try
+                {
+                    Console.Clear();
+                    string adress = "", messager = "";
+                    string[] adress_split = new string[7];
+                    ;
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Вы хотите вывести адрес, заданный по умолчанию?" +
+                        " Да - нажмите Y. Нет - N.");
+                    Console.ResetColor();
+                    char answer = Convert.ToChar(Console.ReadLine());
+                    if (answer == 'Y' || answer == 'y')
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("\t~Выбрана опция выполнения метода по умолчанию~");
+                        Console.ResetColor();
+                        messager = "Сообщение на задано.";
+                        PostalDelivery letter = new PostalDelivery();
+                        Console.WriteLine(letter.Letter());
+                        Console.ResetColor();
+                    }
+                    if (answer == 'N' || answer == 'n')
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Введите через запятую адрес получателя:" +
+                            "ИНДЕКС, ГОРОД, УЛИЦА, ДОМ, КОРПУС, КВАРТИРА\n");
+                        adress = Console.ReadLine();
+                        adress_split = adress.Split(',');
+                        if (adress_split.Length < 6)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Ошибка: Недостаточно данных! Введите все 6 компонентов адреса.");
+                            Console.ResetColor();
+                            return;
+                        }
+                        Console.WriteLine("Введите сообщение: ");
+                        messager = Console.ReadLine();
+                        Console.Clear();
+                        PostalDelivery letter = new PostalDelivery(Convert.ToInt32(adress_split[0]), adress_split[1], adress_split[2],
+                            Convert.ToInt32(adress_split[3]), Convert.ToInt32(adress_split[4]), Convert.ToInt32(adress_split[5]), messager);
+                        Console.WriteLine(letter.Letter());
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Непредвиденная ошибка!");
+                }
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("\nПродолжить? Y - N");
+                an = Convert.ToChar(Console.ReadLine());
+                Console.ResetColor();
+            }
+            while (an == 'Y' || an == 'y');
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ПР_7
+{
+    public class PostalDelivery
+    {
+        private int index;
+        private string city;
+        private string street;
+        private int house;
+        private int body;
+        private int flat;
+        private string message;
+        public PostalDelivery(int newIndex, string newCity, string newStreet,
+            int newHouse, int newBody, int newFlat, string newMessage)
+        {
+            index = newIndex;
+            city = newCity;
+            street = newStreet;
+            house = newHouse;
+            body = newBody;
+            flat = newFlat;
+            message = newMessage;
+        }
+        public PostalDelivery()
+        {
+            index = 0;
+            city = "Не задан.";
+            street = "Не задана.";
+            house = 0;
+            body = 0;
+            flat = 0;
+            message = "Пустое сообщение.";
+        }
+        public string Letter()
+        {
+            string adress = $"Адрес получателя: {city}, {street},{house}/{body}-{flat}. (Индекс: {index})\nСообщение: {message}";
+            return adress;
+        }
+    }
+}
