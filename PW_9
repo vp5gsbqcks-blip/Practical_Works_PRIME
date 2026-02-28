@@ -1,0 +1,200 @@
+using System;
+using System.Security.AccessControl;
+
+namespace ПР_9
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string an = "Y";
+            do
+            {
+                string ex = "";
+                Console.Clear();
+                Console.WriteLine("Хотите ввести царства-государства сами, или задать государства по умолчанию?\n" +
+                    "1. Пользовательский ввод\n" +
+                    "2. По умолчанию");
+                ex = Console.ReadLine();
+                if (ex == "1")
+                {
+                    Console.Clear();
+                    Console.Write("Сколько государств хотите ввести?\n--> ");
+                    int quantity_state = Convert.ToInt32(Console.ReadLine());
+                    int[] states = new int[quantity_state];
+                    string[] names_st = new string[quantity_state]; //Массив, хранящий названия гос-в
+                    int[] pop_st = new int[quantity_state]; //Массив с населениями
+                    float[] squ_st = new float[quantity_state]; //Массив с площадями
+                    for (int i = 0; i < quantity_state; i++)
+                    {
+                        Console.WriteLine($"Введите название {i}-го государства: ");
+                        names_st[i] = Console.ReadLine();
+                    }
+                    for (int i = 0; i < quantity_state; i++)
+                    {
+                        Console.WriteLine($"Введите население {i}-го государства: ");
+                        pop_st[i] = Convert.ToInt32(Console.ReadLine());
+                    }
+                    for (int i = 0; i < quantity_state; i++)
+                    {
+                        Console.WriteLine($"Введите площадь {i}-го государства: ");
+                        squ_st[i] = Convert.ToSingle(Console.ReadLine());
+                    }
+                    for (int i = 0; i < quantity_state; i++)
+                    {
+                        State obj = new State();
+                        obj.title = names_st[i];
+                        obj.population = pop_st[i];
+                        obj.square = squ_st[i];
+                    }
+                    Console.WriteLine();
+                    /*Console.Clear();
+                    Console.Write("Введите название 1-го государства:\n-->");
+                    string nstate1 = Console.ReadLine();
+                    Console.Write("Введите население 1-го государства:\n-->");
+                    int npop1 = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Введите площадь 1-го государства:\n-->");
+                    float nsqu1 = Convert.ToSingle(Console.ReadLine());
+                    Console.Write("\nВведите название 2-го государства:\n-->");
+                    string nstate2 = Console.ReadLine();
+                    Console.Write("Введите население 2-го государства:\n-->");
+                    int npop2 = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Введите площадь 2-го государства:\n-->");
+                    float nsqu2 = Convert.ToSingle(Console.ReadLine());
+                    State state1 = new State(nstate1, npop1, nsqu1);
+                    State state2 = new State(nstate2, npop2, nsqu2);
+                    State result = state1 + state2;
+                    Console.Clear();
+                    Console.WriteLine("Объединенное государство: " + result.ToString());*/
+                }
+                else if (ex == "2")
+                {
+                    Console.Clear();
+                    State state1 = new State("Тартария", 400540, 989324f);
+                    State state2 = new State("Гиперборея", 608080, 1000000f);
+                    State state3 = new State("Сарматия", 400540, 565656f);
+                    State state4 = new State("Скифия", 132904, 359584f);
+                    State state5 = new State("Скуфия", 900000, 1000000f);
+                    Console.WriteLine("Государства по умолчанию:");
+                    Console.Write(state1.ToString());
+                    Console.Write(state2.ToString());
+                    Console.Write(state3.ToString());
+                    Console.Write(state4.ToString());
+                    Console.Write(state5.ToString());
+                    State result = state1 + state3;
+                    Console.WriteLine("\n\nТеперь объединенное государство: " + result.ToString());
+                    if (state1 > state3)
+                        Console.WriteLine($"{state1} больше по населению/площади");
+                    else if (state1 < state3)
+                        Console.WriteLine($"{state2} больше по населению/площади");
+                    else
+                        Console.WriteLine("Государства равны");
+                    Console.WriteLine(Empire.EmpireAnalize(state1));
+                }
+                else
+                    Console.WriteLine("Ошибка! Нужно выбрать 1 или 2.");
+                Console.WriteLine("Продолжить?\nY - N");
+                an = Console.ReadLine();
+            }
+            while (an == "Y" || an == "y");
+        }
+    }
+}
+
+
+
+using System;
+
+namespace ПР_9
+{
+    internal class Empire
+    {
+        public static int population;
+        public static float square;
+
+        public Empire()
+        {
+            population = 300000;
+            square = 900000;
+            Console.WriteLine("Не задано.");
+        }
+        public Empire(int newPopulation, float newSquare)
+        {
+            population = newPopulation;
+            square = newSquare;
+        }
+        public static string EmpireAnalize(State state1)
+        {
+            if (state1.population >= population && state1.square >= square)
+                return "\nЭто государство - империя: " + state1;
+            else
+                return "Государство " + state1 + "не империя";
+        }
+    }
+}
+
+
+
+using System.Collections.Generic;
+
+namespace ПР_9
+{
+    internal class State
+    {
+        public string title;
+        public int population;
+        public float square;
+        public State()
+        {
+            title = "Не задано";
+            population = 0;
+            square = 0;
+        }
+        public State(string newTitle, int newPopulation, float newSquare)
+        {
+            title = newTitle;
+            population = newPopulation;
+            square = newSquare;
+        }
+        List<State> objects = new List<State> ();
+        public static State operator +(State state1, State state2)
+        {
+            State result = new State();
+            result.title = state1.title + "+" + state2.title;
+            result.population = state1.population + state2.population;
+            result.square = state1.square + state2.square;
+            return result;
+        }
+        public static bool operator <(State state1, State state2)
+        {
+            State result1 = new State();
+            State result2 = new State();
+            if (state1.population != state2.population)
+            {
+                return state1.population < result2.population;
+            }
+            else
+                return state1.square < state2.square;
+        }
+        public static bool operator >(State state1, State state2)
+        {
+            if (state1.population != state2.population)
+                return state1.population > state2.population;
+            else
+                return state1.square > state2.square;
+        }
+        public static bool operator <=(State state1, State state2)
+        {
+            return !(state1 > state2);
+        }
+
+        public static bool operator >=(State state1, State state2)
+        {
+            return !(state1 < state2);
+        }
+        public override string ToString()
+        {
+            return $"\nНазвание: {title}, Население: {population}, Площадь: {square}";
+        }
+    }
+}
