@@ -1,0 +1,133 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ПР_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    int ex = 0;
+                    Console.WriteLine("Введите задание, которое вы хотите просмотреть: " +
+                        "\n 1 Задание: Сумма чётных чисел от n1 до n2 " +
+                        "\n 2 Задание: Расчёт площади круга " +
+                        "\n 3 Задание: Рандомные числа " +
+                        "\n 4 Задание: Сумма рандомных чисел, которые больше числа s" +
+                        "\n 5 Задание: Поиск буквы Д в строке\n");
+                    ex = Convert.ToInt32(Console.ReadLine());
+                    switch (ex)
+                    {
+                        case 1: 
+                            Console.Clear();
+                            Console.WriteLine("**Вы выбрали 1 Задание** \n");
+                            int n1, n2, sum_ex1 = 0;
+                            Console.WriteLine("Введите число n1: ");
+                            n1 = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите число n2: ");
+                            n2 = Convert.ToInt32(Console.ReadLine());
+                            for (int i = n1; i <= n2; i++)
+                            {
+                                if (i % 2 == 0)
+                                    sum_ex1 += i;
+                            }
+                            Console.WriteLine("Сумма нечётных чисел от n1 до n1 равна: " + sum_ex1);
+                            break;
+                        case 2:
+                            Console.Clear();
+                            Console.WriteLine("**Вы выбрали 2 Задание** \n");
+                            string z, ans = "";
+                            double S_ex2;
+                            for (int i = 0; ans != "z"; i++)
+                            {                                    
+                                Console.WriteLine("Введите радиус или \"z\", чтобы завершить: ");
+                                z = Console.ReadLine();
+                                if (z != "z")
+                                {
+                                    Console.Clear();
+                                    S_ex2 = (Math.PI * Math.Pow(Convert.ToDouble(z), 2));
+                                    Console.WriteLine("Площадь круга: " + S_ex2);
+                                }
+                                else if (z == "z")
+                                {
+                                    Console.WriteLine("Программа завершена :)");
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Ошибка :(");
+                            }
+                            break;
+                        case 3:
+                            Console.Clear();
+                            Console.WriteLine("**Вы выбрали 3 Задание** \n");
+                            Random rand_ex3 = new Random();
+                            for (int i = 0; i <= 30; i++)
+                            {
+                                int num = rand_ex3.Next(-30, 31);
+                                if (num < 0)
+                                {
+                                    Console.WriteLine("Число отрицательное: " + num);
+                                    System.Threading.Thread.Sleep(500);
+                                }
+                                else if (num >= 0)
+                                {
+                                    Console.WriteLine("Число положительное: " + num);
+                                    System.Threading.Thread.Sleep(100);
+                                }
+                            }
+                            break;
+                        case 4:
+                            Console.Clear();
+                            Console.WriteLine("**Вы выбрали 4 Задание** \n");
+                            int ir = 1, s, sum_ex4 = 0;
+                            Console.WriteLine("Введите число s: ");
+                            s = Convert.ToInt32(Console.ReadLine());
+                            Random rand_ex4 = new Random();
+                            do
+                            {
+                                int n = rand_ex4.Next(0, 21);
+                                Console.WriteLine("\n Число " + ir + ": " + n);
+                                sum_ex4 += n;
+                                if (ir > 1)
+                                    Console.WriteLine("Сумма: " + sum_ex4);
+                                ir += 1;
+                                System.Threading.Thread.Sleep(300);
+                            }
+                            while (sum_ex4 <= s);
+                            Console.WriteLine("\n Число " + sum_ex4 + " больше, чем " + s +
+                                "\n Сумма рандомных чисел равна: " + sum_ex4);
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Console.WriteLine("**Вы выбрали 5 Задание** \n");
+                            Console.WriteLine("Введите строку: ");
+                            string str = Console.ReadLine();
+                            int i_ex5 = 0;
+                            foreach (char d in str)
+                            {
+                                if (d == 'д' || d == 'Д')
+                                    i_ex5++;
+                            }
+                            Console.WriteLine("Буква Д или д присутствует в строке " + i_ex5 + " раз.");
+                            break;
+                    }
+                    Console.WriteLine("\n Хотите продолжить? Введите Y " +
+                        "\n Если хотите прекратить, введите N ");
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }            
+            }
+        }
+    }
+}
