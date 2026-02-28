@@ -1,0 +1,234 @@
+using System;
+
+namespace ПР_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    int ex = 0;
+                    Console.WriteLine("Введите задание, которое вы хотите просмотреть: " +
+                        "\n 1 Задание: Массив и количество+сумма положительных чисел" +
+                        "\n 2 Задание: Массив и его максимальный и минимальный элемент" +
+                        "\n 3 Задание: Сортировка массива" +
+                        "\n 4 Задание: Самая длинная фамилия" +
+                        "\n 5 Задание: Двумерный массив и его макс./мин. элементы в строке и столбце");
+                    ex = Convert.ToInt32(Console.ReadLine());
+                    switch (ex)
+                    {
+                        case 1:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #1 \nВведите количество (n) натуральных чисел в массиве: ");
+                            int n = Convert.ToInt32(Console.ReadLine());
+                            int[] arr = new int[100];
+                            int sum_arr = 0, qu_pos = 0;
+                            Random num = new Random();
+                            for (int i = 0; i < n; i++)
+                            {
+                                int num1 = num.Next(-50, 50);
+                                arr[i] = Convert.ToInt32(num1);
+                                Console.WriteLine("\n" + arr[i]);
+                                if (arr[i] > 0)
+                                {
+                                    sum_arr += arr[i];
+                                    qu_pos++;
+                                }
+                            }
+                            Console.WriteLine("\n Количество положительных чисел в массиве: " + qu_pos +
+                                "\n Сумма положительных чисел массива: " + sum_arr);
+                            break;
+                        case 2:
+                            Console.Clear();
+                            int[] arr_num = new int[10];
+                            Console.WriteLine("Вы выбрали задание #2 \nВведите 10 целых чисел: \n" +
+                                "\n Можете скопировать, чтобы не вводить: " +
+                                "\n12 546 35 2 89 109 2456 876 4 7090");
+                            string num_ex2 = Console.ReadLine();
+                            string[] numbers = num_ex2.Split(' ');
+                            if (numbers.Length < 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено меньше 10 чисел!");
+                                break;
+                            }
+                            if (numbers.Length > 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено больше 10 чисел!");
+                                break;
+                            }
+                            for (int i = 0; i < 10; i++)
+                            {
+                                arr_num[i] = Convert.ToInt32(numbers[i]);//Заполняем массив                               
+                            }
+                            int min = arr_num[0];
+                            int max = arr_num[0];
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (arr_num[i] < min)
+                                    min = arr_num[i];
+                                if (arr_num[i] > max)
+                                    max = arr_num[i];
+                            }
+                            Console.WriteLine("Массив чисел: ");
+                            foreach (int num1 in arr_num)
+                            {
+                                Console.Write(num1 + " ");
+                            }
+                            Console.WriteLine("\n Максимальный элемент массива: " + max + "\n Минимальный элемент массива: " + min);
+                            break;
+                        case 3:
+                            Console.Clear();
+                            int[] arr_numb = new int[10];
+                            Console.WriteLine("Вы выбрали задание #3 \nВведите 10 целых чисел: \n" +
+                                "\n Можете скопировать, чтобы не вводить: " +
+                                "\n4 58 237 22 47 602 7 80 899 100");
+                            string num_ex3 = Console.ReadLine();
+                            string[] number = num_ex3.Split(' ');
+                            if (number.Length < 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено меньше 10 чисел!");
+                                break;
+                            }
+                            if (number.Length > 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено больше 10 чисел!");
+                                break;
+                            }
+                            for (int i = 0; i < 10; i++)
+                            {
+                                arr_numb[i] = Convert.ToInt32(number[i]);//Заполняем массив                               
+                            }
+                            Console.WriteLine("\n Несортированный массив чисел: ");
+                            foreach (int num1 in arr_numb)
+                            {
+                                Console.Write(num1 + " ");
+                            }
+                            for (int i = 0; i < 9; i++)
+                            {
+                                for (int j = 0; j < 9; j++)
+                                {
+                                    if (arr_numb[j] > arr_numb[j + 1])
+                                        (arr_numb[j], arr_numb[j + 1]) = (arr_numb[j + 1], arr_numb[j]);
+                                }
+                                ;
+                            }
+                            Console.WriteLine("\n  \n Отсортированный массив чисел: ");
+                            foreach (int num1 in arr_numb)
+                            {
+                                Console.Write(num1 + " ");
+                            }
+                            break;
+                        case 4:
+                            Console.Clear();
+                            string[] surn = new string[10];
+                            string sur;
+                            Console.WriteLine("Вы выбрали задание #4 \nВведите 10 фамилий: \n" +
+                                "\n Можете выделить и скопировать, чтобы не вводить: " +
+                                "\nСыробогатов Ант Пипецов Лучшевсехочеловеков Колбаскин Хлебушкин Бутербродов Вреднов Хорошов Хихихочкин");
+                            sur = Console.ReadLine();
+                            string[] surname = sur.Split(' ');
+                            if (surn.Length < 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено меньше 10 фамилий!");
+                                break;
+                            }
+                            if (surn.Length > 10)
+                            {
+                                Console.WriteLine("Ошибка! Введено больше 10 фамилий!");
+                                break;
+                            }
+                            for (int i = 0; i < 10; i++)
+                            {
+                                surn[i] = surname[i];  //Заполняем массив                               
+                            }
+                            /*for(int i = 0; i < 10; i++)    
+                                Console.WriteLine(surn[i]);*/ //Часть кода для проверки несортированного массива
+                            for (int i = 0; i < 9; i++) //Сортируем
+                            {
+                                for (int j = 0; j < 9; j++)
+                                {
+                                    if (surn[j].Length > surn[j + 1].Length)
+                                        (surn[j], surn[j + 1]) = (surn[j + 1], surn[j]);
+                                }
+                            }
+                            /*Console.WriteLine("\n");
+                            for (int i = 0; i < 10; i++)
+                                Console.WriteLine(surn[i]);*/ //Часть кода для проверки сортированного массива
+                            Console.WriteLine($"\n Самая длинная фамилия: {surn[surn.GetUpperBound(0)]}");
+                            break;                       
+                        case 5:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #5 \n");
+                            int[,] arr_ex5 = new int[6, 8];
+                            Random nums = new Random();
+                            for (int i = 0; i < 6; i++)
+                            {
+                                for (int j = 0; j < 8; j++)
+                                    arr_ex5[i, j] = nums.Next(-70, 71);
+                            }
+                            Console.Write($"\t"); 
+                            for (int j = 0; j < 8; j++)
+                            {
+                                Console.Write($" {j + 1} \t");
+                            }
+                            Console.Write($"\n\t");
+                            for (int j = 0; j < 8; j++)
+                            {
+                                Console.Write($"---\t");
+                            }
+                            for (int i = 0; i < 6; i++)
+                            {
+                                Console.Write($"\n{i + 1}|\t");
+                                for (int j = 0; j < 8; j++)
+                                {
+                                    Console.Write($"{arr_ex5[i, j]}\t");
+                                }
+                            }
+                            Console.WriteLine("\n");
+                            for (int i = 0; i < 6; i++)
+                            {
+                                int max_index = 0;
+
+                                for (int j = 1; j < 8; j++)
+                                {
+                                    if (arr_ex5[i, j] > arr_ex5[i, max_index])
+                                    {
+                                        max_index = j;
+                                    }
+                                }
+                                Console.WriteLine($"Макс. эл-т {i + 1}-й строки: {arr_ex5[i, max_index]}");
+                            }                            
+                            Console.WriteLine("\n");
+                            for (int j = 0; j < 8; j++)
+                            {
+                                int min_value = arr_ex5[0, j];
+                                int min_row_index = 0;
+                                for (int i = 1; i < 6; i++)
+                                {
+                                    if (arr_ex5[i, j] < min_value)
+                                    {
+                                        min_value = arr_ex5[i, j];
+                                        min_row_index = i;
+                                    }
+                                }
+                                Console.WriteLine($"Мин. эл-т {j + 1}-го столбца:  {min_value}");
+                            }
+                            break;
+                    }
+                    Console.WriteLine("\n Хотите продолжить? Введите Y " +
+                        "\n Если хотите прекратить, введите N ");
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
