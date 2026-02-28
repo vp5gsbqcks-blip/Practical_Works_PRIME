@@ -1,0 +1,191 @@
+using System;
+
+namespace ПР_4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string of = "Y";
+            while (of == "Y" || of == "y")
+            {
+                if (of == "Y" || of == "y")
+                {
+                    Console.Clear();
+                    int ex = 0;
+                    Console.WriteLine("Введите задание, которое вы хотите просмотреть: " +
+                        "\n 1 Задание: Количество букв \"А\" и \"а\" + " +
+                        "\n 2 Задание: Сумма чётных чисел массива " +
+                        "\n 3 Задание: Четыре мега-метода " +
+                        "\n 4 Задание: Количество элементов массива, равных 5" +
+                        "\n 5 Задание: Поиск символа в строке");
+                    ex = Convert.ToInt32(Console.ReadLine());
+                    switch (ex)
+                    {
+                        case 1:
+                            Console.Clear();
+                            string str;
+                            Console.Write("Вы выбрали задание #1 \nВведите строку произвольной длины: " +
+                                "(Например: Ах, какой замечательный день, чтобы побездельничать!)" +
+                                "\n--> ");
+                            str = Console.ReadLine();
+                            Console.WriteLine($"\n Количество букв \"А\" и \"а\": {CountSymbols(str)}");
+                            break;
+                        case 2:
+                            Console.Clear();
+                            int[] arr_symbols = new int[10];
+                            string symbols = "";
+                            Console.Write("Вы выбрали задание #2 \nВведите 10 целых чисел: " +
+                                "(Например: 2 15 12 29 4 2 8 12 14 16, должно получиться 70)" +
+                                "\n--> ");
+                            symbols = Console.ReadLine();
+                            string[] figures = symbols.Split(' ');
+                            for (int i = 0; i < 10; i++)
+                                arr_symbols[i] = Convert.ToInt32(figures[i]); //Заполняем массив                            
+                            Console.WriteLine($"\nСумма чётных чисел массива: {SumFiguresEvNumb(arr_symbols)}");
+                            break;
+                        case 3:
+                            Console.Clear();
+                            float[] num = new float[2];
+                            string numbers = "";
+                            Console.Write("Вы выбрали задание #3 \nВведите два вещественных числа: + " +
+                                "(Например: 2,35 3,44 , должно получиться: 1: 5,79; 2: 1,09; 3: 8,084; 4: 0,6831395)" +
+                                "\n--> ");
+                            numbers = Console.ReadLine();
+                            string[] numb = numbers.Split(' ');
+                            for (int i = 0; i < 2; i++)
+                                num[i] = Convert.ToSingle(numb[i]); //Заполняем массив
+                            Console.WriteLine($"\nВывод 1-го метода - Сумма чисел: {SumTwoFigures(num)}");
+                            Console.WriteLine($"Вывод 2-го метода - Разность чисел: {DifferenceTwoFigures(num)}");
+                            Console.WriteLine($"Вывод 3-го метода - Произведение чисел: {MultiplicationTwoFigures(num)}");
+                            Console.WriteLine($"Вывод 4-го метода - Частное чисел: {DivisionTwoFigures(num)}");
+                            break;
+                        case 4:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #4\n");
+                            int[] array_1 = new int[10];
+                            int[] array_2 = new int[10];
+                            int[] array_3 = new int[10];
+                            int a = 0;
+                            Random rand = new Random();
+                            for (int i = 0; i < 10; i++)
+                            {
+                                array_1[i] = rand.Next(0, 100);
+                                array_2[i] = rand.Next(0, 100);
+                                array_3[i] = rand.Next(0, 100);
+                            }
+                            a = FeelArray(array_1);
+                            if (a != 0)
+                                Console.WriteLine($"\nЧисло пять в массиве #1 встречено {a} раз(а)\n");
+                            a = FeelArray(array_2);
+                            if (a != 0)
+                                Console.WriteLine($"\nЧисло пять в массиве #2 встречено {a} раз(а)\n");
+                            a = FeelArray(array_3);
+                            if (a != 0)
+                                Console.WriteLine($"\nЧисло пять в массиве #3 встречено {a} раз(а)\n");
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Console.WriteLine("Вы выбрали задание #5\nВведите строку произвольной длины: ");
+                            string str_1 = "";
+                            str_1 = Console.ReadLine();
+                            char ch = ' ';
+                            Console.WriteLine("Введите символ: ");
+                            ch = Convert.ToChar(Console.ReadLine());
+                            Console.WriteLine(RepetitionsOfTheSymbol(str_1, ch));
+                            break;
+                    }
+                    Console.WriteLine("\n Хотите продолжить? Введите Y " +
+                        "\n Если хотите прекратить, введите N ");
+                    of = Console.ReadLine();
+                }
+                else if (of == "N" || of == "n")
+                {
+                    break;
+                }
+            }
+        }
+        static int CountSymbols(string str) //Количество символов
+        {
+            int countSumbols = 0;
+            foreach (char a in str)
+            {
+                if (a == 'А' || a == 'а' || a == 'A' || a == 'a') //Предусмотрел как ввод кириллицы, так и латиницы
+                    countSumbols++;
+            }
+            MoreLetterA(countSumbols);
+            return countSumbols;
+        }
+        static void MoreLetterA(int countSymbols) //Много букв А
+        {
+            if (countSymbols > 10)
+                Console.WriteLine("\n В данной строке много букв \"А\"");
+            return;
+        }
+        static int SumFiguresEvNumb(int[] arr_symbols) //Сумма чётных чисел
+        {
+            int sumFigures = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (arr_symbols[i] % 2 == 0)
+                {
+                    sumFigures += arr_symbols[i];
+                }
+            }
+            return sumFigures;
+        }
+        static float SumTwoFigures(float[] num) //Сумма двух вещ.чисел
+        {
+            float sum_Two = 0;
+            sum_Two = num[0] + num[1];
+            return sum_Two;
+        }
+        static float DifferenceTwoFigures(float[] num) //Разность двух вещ.чисел
+        {
+            float dif_Two = 0;
+            for (int i = 0; i < 2; i++)
+                dif_Two = num[1] - num[0];
+            return dif_Two;
+        }
+        static float MultiplicationTwoFigures(float[] num) //Произведение двух вещ.чисел
+        {
+            float mult_Two = 0;
+            mult_Two = num[0] * num[1];
+            return mult_Two;
+        }
+        static float DivisionTwoFigures(float[] num) //Частное двух вещ.чисел
+        {
+            float div_Two = 0;
+            if (num[0] != 0 || num[1] != 0)
+                div_Two = num[0] / num[1];
+            else if (num[0] == 0 || num[1] == 0)
+                Console.WriteLine("Ошибка! Деление на ноль!");
+            else
+                Console.WriteLine("Ошибка!");
+            return div_Two;
+        }
+        static int FeelArray(int[] array) //Вывод массива с поиском числа 5
+        {
+            int a = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                Console.Write($" {array[i]} ");
+                if (array[i] == 5)
+                    a++;
+            }
+            if (a == 0)
+                Console.WriteLine("\nВ массиве не было встречено число 5.\n");
+            return a;
+        }
+        static string RepetitionsOfTheSymbol(string str_1, char ch) //Поиск символа в строке
+        {
+            int count = 0;
+            foreach (char с in str_1)
+                if (с == ch)
+                    count++;
+            if (count == 0) Console.WriteLine($"\nДанного символа: {ch} в строке нет.");
+            return count.ToString();
+        }
+    }
+}
