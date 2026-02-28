@@ -1,0 +1,92 @@
+using System;
+
+namespace ПР_8
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string an = "Y";
+            do
+            {
+                Console.Clear();
+                int var = 0, quan = 0;
+                string arrive = "";
+                Console.WriteLine("Выберите, какой массив вы намерены ввести:" +
+                    "\n1. Массив целых чисел\n" +
+                    "2. Массив вещественных чисел (с плавающей точкой)");
+                var = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Сколько чисел введёте?");
+                quan = Convert.ToInt32(Console.ReadLine());
+                int[] arrival_i = new int[quan];
+                float[] arrival_f = new float[quan];
+                Console.Write("Введите массив чисел:\n--> ");
+                arrive = Console.ReadLine();
+                string[] arr = arrive.Split(' ');
+                if (var == 1)
+                {
+                    for (int i = 0; i < quan; i++)
+                        arrival_i[i] = Convert.ToInt32(arr[i]);
+                    Arrives arry = new Arrives(arrival_i);
+                    string result = arry.Array(arrival_i);
+                    Console.WriteLine($"Результат: {result}");
+                }
+                if (var == 2)
+                {
+                    for (int i = 0; i < quan; i++)
+                        arrival_f[i] = Convert.ToSingle(arr[i]);
+                    Arrives arry = new Arrives(arrival_f);
+                    string result = arry.Array(arrival_f, 0);
+                    Console.WriteLine($"Результат: {result}");
+                }
+                Console.WriteLine("\nПродолжить?\n\tY - N");
+                an = Console.ReadLine();
+            }
+            while (an == "Y" || an == "y");
+        }
+    }
+}
+
+
+
+using System;
+
+namespace ПР_8
+{
+    internal class Arrives
+    {
+        float[] arrayFlo;
+        int[] arrayInt;
+
+        internal Arrives(int[] newArrayI)
+        {
+            arrayInt = newArrayI;
+        }
+        internal Arrives(float[] newArrayF)
+        {
+            arrayFlo = newArrayF;
+        }
+        internal Arrives()
+        {
+            Console.WriteLine("Массив не задан!");
+        }
+        public string Array(int[] arry)
+        {
+            string stringArr = "";
+            for (int i = 0; i < arry.Length; i++)
+            {
+                stringArr += arry[i] + " ";
+            }
+            return stringArr;
+        }
+        public string Array(float[] arry, int nul)
+        {
+            string stringArry = "";
+            for (int i = 0; i < arry.Length; i++)
+            {
+                stringArry += arry[i] + " ";
+            }
+            return stringArry;
+        }
+    }
+}
